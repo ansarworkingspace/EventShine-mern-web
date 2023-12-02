@@ -67,44 +67,65 @@ const authUser = asyncHandler(async (req, res) => {
 
 
 
-// Register a new user
+
+
+
+
+
+
+
+// Register a new user or update user data if already exists
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
 
   // Check if the user already exists
-  const userExists = await User.findOne({ email });
+  const existingUser = await User.findOne({ email });
 
-  if (userExists) {
-    
-    res.status(400).json({ message: 'User already exists' });
+  if (existingUser) {
+    // User exists, update user data if verified is false
+    if (!existingUser.verified) {
+      existingUser.name = name;
+      existingUser.password = password;
+      existingUser.otp = Math.floor(100000 + Math.random() * 900000);
+      await existingUser.save();
+
+      // Send OTP to user's email
+      await sendOtpEmail(email, existingUser.otp);
+
+      res.status(200).json({
+        message: 'User data updated successfully',
+        otp: existingUser.otp, // You may choose to include the OTP in the response
+      });
+    } else {
+      res.status(400).json({ message: 'User already exists and is verified' });
+    }
   } else {
-    // Generate OTP (you may use a library for this)
-    const otp = Math.floor(100000 + Math.random() * 900000);
-
-    // Create the user (you may need to hash the password)
-    const user = await User.create({
+    // User doesn't exist, create a new user
+    const newUser = await User.create({
       name,
       email,
       password,
-      otp,
+      otp: Math.floor(100000 + Math.random() * 900000),
     });
 
-    // Send OTP email
-    try {
-      await sendOtpEmail(email, otp);
+    if (newUser) {
+      // Send OTP to user's email
+      await sendOtpEmail(email, newUser.otp);
 
-      // For development, you may send the OTP in the response (remove in production)
       res.status(201).json({
         message: 'User registered successfully',
-        otp,
+        otp: newUser.otp, // You may choose to include the OTP in the response
       });
-    } catch (error) {
-      // Handle email sending errors
-      console.error('Error sending OTP email:', error);
-      res.status(500).json({ message: 'Error sending OTP email' });
+    } else {
+      res.status(400).json({ message: 'Invalid user data' });
     }
   }
 });
+
+
+
+
+
 
 //logout user
 const logoutUser = (req, res) => {
@@ -115,7 +136,8 @@ const logoutUser = (req, res) => {
     res.status(200).json({ message: 'Logged out successfully' });
   };
 
-  const verifyOTP = asyncHandler(async (req, res) => {
+
+const verifyOTP = asyncHandler(async (req, res) => {
     const { email, otp } = req.body;
   
     // Find user by email
@@ -147,9 +169,35 @@ const logoutUser = (req, res) => {
   });
   
 
+
+  const resendOtp = asyncHandler(async (req, res) => {
+    try {
+      const { email } = req.body; 
+      const user = await User.findOne({ email });
+  
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+  
+      const newOtp = Math.floor(1000 + Math.random() * 9000);
+      user.otp = newOtp;
+      await user.save();
+  
+      await sendOtpEmail(email, newOtp);
+  
+      res.status(200).json({ message: 'OTP resent successfully' });
+    } catch (error) {
+      console.error('Error while resending OTP:', error);
+      res.status(500).json({ message: 'An error occurred while resending OTP' });
+    }
+  });
+  
+
+
 export { 
   authUser,
   registerUser,
   logoutUser,
   verifyOTP,
+  resendOtp,
  }
