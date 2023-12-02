@@ -11,6 +11,13 @@ export const userApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    verifyOTP: builder.mutation({
+      query: (data) => ({
+        url: `${USERS_URL}/verifyOtp`,
+        method: 'POST',
+        body: data,
+      }),
+    }),
 
     logout: builder.mutation({
         query: () => ({
@@ -21,13 +28,14 @@ export const userApiSlice = apiSlice.injectEndpoints({
 
     register: builder.mutation({
         query: (data) => ({
-          url: `${USERS_URL}`,
+          url: `${USERS_URL}/register`,
           method: 'POST',
           body: data,
         }),
        }),
+       
 
   }),
 });
 
-export const { useLoginMutation,useLogoutMutation,useRegisterMutation } = userApiSlice;
+export const { useLoginMutation,useLogoutMutation,useRegisterMutation,useVerifyOTPMutation } = userApiSlice;

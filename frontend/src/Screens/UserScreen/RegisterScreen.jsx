@@ -18,16 +18,10 @@ const RegisterScreen = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   
-  const [register, { isLoading }] = useRegisterMutation();
   
   const { userInfo } = useSelector((state) => state.auth);
-  
-  useEffect(() => {
-    if (userInfo) {
-      navigate('/');
-    }
-  }, [navigate, userInfo]);
-
+  const [register, { isLoading }] = useRegisterMutation();
+ 
 
 
   const submitHandler = async (e) => {
@@ -37,14 +31,16 @@ const RegisterScreen = () => {
       toast.error('Passwords do not match');
     } else {
       try {
-        const res = await register({ name, email, password }).unwrap();
-        dispatch(setCredentials({ ...res }));
-        navigate('/');
+        await register({ name, email, password}).unwrap();
+        toast.success('Registration successful! Please check your email for the OTP.');
+        navigate(`/otpverification/${encodeURIComponent(email)}`);
+
       } catch (err) {
         toast.error(err?.data?.message || err.error);
       }
     }
   };
+  
 
 
   return (

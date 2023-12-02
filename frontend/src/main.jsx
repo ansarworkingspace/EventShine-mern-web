@@ -15,7 +15,7 @@ import RegisterScreen from './Screens/UserScreen/RegisterScreen.jsx';
 import store from './store.js';
 import { Provider } from 'react-redux';
 import PrivateRoute from './Components/User/UserPrivetRouter.jsx';
-
+import OtpEmailScreen from './Screens/UserScreen/OtpEmailScreen.jsx';
 
 
 const router = createBrowserRouter(
@@ -24,6 +24,7 @@ const router = createBrowserRouter(
       <Route index={true} path='/' element={<HomeScreen />} />
       <Route path='/login' element={<LoginScreen />} /> 
       <Route path='/register' element={<RegisterScreen />} />
+      <Route path='/otpverification/:email' element={<OtpEmailScreen />} />
       <Route path='' element={<PrivateRoute />}>
         
       </Route>
