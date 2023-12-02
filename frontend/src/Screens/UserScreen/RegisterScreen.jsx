@@ -45,7 +45,7 @@ const RegisterScreen = () => {
 
   return (
     <FormContainer>
-      <h1>Register</h1>
+      <h1 style={{fontSize:"1.3rem"}}>Register</h1>
       <Form onSubmit={submitHandler}>
         <Form.Group className='my-2' controlId='name'>
           <Form.Label>Name</Form.Label>
@@ -93,7 +93,7 @@ const RegisterScreen = () => {
       </Form>
 
       <Row className='py-3'>
-        <Col>
+        <Col style={{fontFamily:"Poppins"}}>
           Already have an account? <Link to={`/login`}>Login</Link>
         </Col>
       </Row>
@@ -101,4 +101,4 @@ const RegisterScreen = () => {
   );
 };
 
-export default RegisterScreen;
+export default RegisterScreen ;

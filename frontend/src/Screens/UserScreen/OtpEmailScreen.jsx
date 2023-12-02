@@ -193,7 +193,7 @@ const OtpEmail = () => {
 
   return (
     <FormContainer>
-      <h1>OTP Verification</h1>
+      <h1 style={{fontSize:"1.3rem"}}>OTP Verification</h1>
       <Form onSubmit={handleBOTHsubmit}>
         <Form.Group className='my-2' controlId='otp'>
           <Form.Control

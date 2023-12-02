@@ -39,10 +39,10 @@ const LoginScreen = () => {
   };
 
   return (
-    <FormContainer>
-      <h1>Sign In</h1>
+    <FormContainer >
+      <h2 style={{fontSize:"1.3rem"}}>Sign In</h2>
 
-      <Form onSubmit={submitHandler}>
+      <Form onSubmit={submitHandler} >
         <Form.Group className='my-2' controlId='email'>
           <Form.Label>Email Address</Form.Label>
           <Form.Control
@@ -67,7 +67,7 @@ const LoginScreen = () => {
           disabled={isLoading}
           type='submit'
           variant='primary'
-          className='mt-3'
+          className='mt-3 btNcolor'
         >
           Sign In
         </Button>
@@ -76,7 +76,7 @@ const LoginScreen = () => {
       {isLoading && <Loader />}
 
       <Row className='py-3'>
-        <Col>
+        <Col className='fontPopSmall' style={{fontFamily:"Poppins"}}>
           New Customer? <Link to='/register'>Register</Link>
         </Col>
       </Row>
