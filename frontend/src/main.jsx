@@ -21,6 +21,8 @@ import AdminLoginScreen from './Screens/AdminScreen/AdminLogin.jsx';
 import AdminRegisterScreen from './Screens/AdminScreen/AdminSignUp.jsx'
 import AdminHomeScreen from './Screens/AdminScreen/AdminHome.jsx'
 import AdminPrivetRouter from './Components/Admin/AdminPrivetRouter.jsx'
+import AdminEventManageScreen from './Screens/AdminScreen/AdminEvents.jsx'
+import AddEventScreen from './Screens/AdminScreen/AddEventsScreen.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -44,6 +46,8 @@ const router = createBrowserRouter(
 
       <Route path='' element={<AdminPrivetRouter />}>
       <Route path="/admin/adminHome" element={<AdminHomeScreen />} /> 
+      <Route path="/admin/adminEvents" element={<AdminEventManageScreen />} /> 
+      <Route path="/admin/AddEvent" element={<AddEventScreen />} /> 
       </Route>
 
    
