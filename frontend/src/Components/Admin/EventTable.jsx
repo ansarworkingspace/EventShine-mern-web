@@ -33,7 +33,8 @@ const EventTable = () => {
                       border: 'none',
                       width: '7rem',
                       borderRadius: '0.4rem',
-                      cursor:"auto"
+                      cursor:"auto",
+                      color:'black'
                     }}
                   >
                     Sheduled
@@ -49,6 +50,7 @@ const EventTable = () => {
                       border: 'none',
                       width: '5rem',
                       borderRadius: '0.4rem',
+                      color:'black'
                     }}
                   >
                     Delete

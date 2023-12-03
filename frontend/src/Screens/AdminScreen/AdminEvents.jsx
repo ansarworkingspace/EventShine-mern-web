@@ -29,7 +29,9 @@ const AdminEventManageScreen = () => {
                       border: 'none',
                       width: '7rem',
                       borderRadius: '0.4rem',
-                      fontFamily:"poppins"
+                      fontFamily:"poppins",
+                      color:'black'
+
                     }}>Add Event</button>
 
       <EventTable/>

@@ -3,7 +3,7 @@ import generateAdminToken from '../utils/adminGenToken.js'
 import admin from '../schema/adminSchema.js'
 import jwt from 'jsonwebtoken'
 import User from '../schema/userModel.js';
-
+import Event from '../schema/eventSchema.js'
 
 
 const adminAuth = asyncHandler(async (req, res) => {
@@ -102,10 +102,36 @@ const toggleUserStatus = asyncHandler(async(req,res)=>{
 })
 
 
+const eventAdded = asyncHandler(async (req, res) => {
+  
+  const { eventName, description, youtubeLink, scheduleDate, scheduleTime } = req.body;
+ 
+
+  // You can access the uploaded file information using req.file
+  const imagePath = req.file;
+
+  // Create a new event
+  const newEvent = new Event({
+    eventName,
+    description,
+    youtubeLink,
+    scheduleDate,
+    scheduleTime,
+    image: imagePath.filename,
+  });
+  
+  // Save the event to the database
+  await newEvent.save();
+  
+  res.status(201).json({ message: 'Event added successfully' });
+});
+
+
 export {
     adminAuth,
     adminRegister,
     adminLogout,
     userData,
-    toggleUserStatus
+    toggleUserStatus,
+    eventAdded
 };

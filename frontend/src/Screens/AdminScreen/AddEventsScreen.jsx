@@ -28,7 +28,8 @@ const navigate = useNavigate()
                       border: 'none',
                       width: '13rem',
                       borderRadius: '0.4rem',
-                      fontFamily:"poppins"
+                      fontFamily:"poppins",
+                      color:'black'
                     }}> {'< '} Event Management</button>
            <AddEventForm/>
     
