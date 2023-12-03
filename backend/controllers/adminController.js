@@ -2,6 +2,7 @@ import asyncHandler from 'express-async-handler';
 import generateAdminToken from '../utils/adminGenToken.js'
 import admin from '../schema/adminSchema.js'
 import jwt from 'jsonwebtoken'
+import User from '../schema/userModel.js';
 
 
 
@@ -62,10 +63,20 @@ const adminLogout = (req, res) => {
     res.status(200).json({message:'admin logged out'});
 };
 
+const userData = asyncHandler(async(req,res)=>{
+    try {
+        const userData = await User.find({ verified: true });
+        res.json(userData);
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal Server Error' });
+      }
+})
+
 
 export {
     adminAuth,
     adminRegister,
     adminLogout,
-
+    userData
 };

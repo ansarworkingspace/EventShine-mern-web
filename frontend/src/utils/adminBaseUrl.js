@@ -1,0 +1,1 @@
+export const  adminBaseUrl = 'http://localhost:5000/api/admin'

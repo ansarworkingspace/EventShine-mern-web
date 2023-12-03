@@ -48,6 +48,25 @@ h2{
           color:var(--darkBlack);
     }
 
+
+h4{
+  font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 30px;
+    color:var(--darkBlack);
+}
+
+h6{
+  font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 30px;
+    color:var(--darkBlack);
+}
+
 Form{
     font-family: 'Poppins';
   font-style: normal;
