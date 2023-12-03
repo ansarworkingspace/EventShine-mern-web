@@ -1,4 +1,4 @@
-import { apiSlice } from "../../Slice/Admin/ApiSlice";
+import { apiSlice } from "../../Slice/User/ApiSlice";
 const ADMIN_URL = '/api/admin';
 
 export const AdminApiSlice = apiSlice.injectEndpoints({
