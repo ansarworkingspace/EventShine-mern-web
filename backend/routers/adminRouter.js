@@ -6,7 +6,8 @@ import {
   userData,
   toggleUserStatus,
   eventAdded,
-  showEvents
+  showEvents,
+  deleteEvent
 } from '../controllers/adminController.js';
 import { protect } from '../middleware/adminAuthMId.js';
 import multer from 'multer';
@@ -37,5 +38,6 @@ router.get('/userData',userData)
 router.post('/toggleUserStatus',toggleUserStatus)
 router.post('/eventAdded', upload.single('media'), eventAdded);
 router.get('/showEvents',showEvents)
+router.post('/deleteEvent',deleteEvent)
 
 export default router;

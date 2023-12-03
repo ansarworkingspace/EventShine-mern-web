@@ -74,6 +74,7 @@
 import React, { useState, useEffect } from 'react';
 import { adminBaseUrl } from '../../utils/adminBaseUrl';
 import axios from 'axios';
+import {toast} from 'react-toastify'
 
 const EventTable = () => {
   const [eventsData, setEventsData] = useState([]);
@@ -92,6 +93,27 @@ const EventTable = () => {
 
     fetchEvents();
   }, []); // The empty dependency array ensures that the effect runs only once, similar to componentDidMount
+
+
+
+  const handleDelete = async (eventId) => {
+    try {
+      // Send a request to delete the event
+      const res = await axios.post(`${adminBaseUrl}/deleteEvent`, { eventId });
+      toast.success(res.data.message);
+      
+      // Refresh the events data after deletion
+      const response = await axios.get(`${adminBaseUrl}/showEvents`);
+      setEventsData(response.data);
+    } catch (error) {
+      console.error('Error deleting event:', error);
+      // Handle error as needed
+    }
+  };
+
+
+
+
 
   return (
     <>
@@ -127,6 +149,7 @@ const EventTable = () => {
               <td>{event.data}</td>
               <td>
                 <button
+                  onClick={() => handleDelete(event.id)}
                   style={{
                     backgroundColor: 'rgb(255, 122, 122)',
                     border: 'none',
