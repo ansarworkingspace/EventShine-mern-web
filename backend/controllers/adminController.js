@@ -127,11 +127,94 @@ const eventAdded = asyncHandler(async (req, res) => {
 });
 
 
+
+// const showEvents = asyncHandler(async (req, res) => {
+//   try {
+//     // Fetch all events from the database
+//     const allEvents = await Event.find({}, 'eventName scheduleDate scheduleTime');
+
+//     // Get the current date and time
+//     const currentDate = new Date();
+
+//     // Process events data
+//     const eventsData = allEvents.map((event) => {
+//       // Check if the event date is today
+//       const isEventDateToday =
+//         currentDate.toISOString().split('T')[0] === event.scheduleDate.toISOString().split('T')[0];
+
+//       // Check if the event time has already expired
+//       const eventDateTime = new Date(event.scheduleDate);
+//       eventDateTime.setHours(parseInt(event.scheduleTime.split(':')[0], 10));
+//       eventDateTime.setMinutes(parseInt(event.scheduleTime.split(':')[1], 10));
+
+//       const status = currentDate > eventDateTime;
+
+//       // Return required details
+//       return {
+//         name: event.eventName,
+//         data: isEventDateToday
+//           ? event.scheduleTime
+//           : status
+//           ? eventDateTime.toISOString()
+//           : eventDateTime.toISOString().split('T')[0], // Return the scheduled date for future events
+//         status,
+//       };
+//     });
+
+//     res.status(200).json(eventsData);
+//   } catch (error) {
+//     console.error('Error fetching events:', error);
+//     res.status(500).json({ error: 'Internal Server Error' });
+//   }
+// });
+
+
+const showEvents = asyncHandler(async (req, res) => {
+  try {
+    // Fetch all events from the database
+    const allEvents = await Event.find({}, 'eventName scheduleDate scheduleTime');
+
+    // Get the current date and time
+    const currentDate = new Date();
+
+    // Process events data
+    const eventsData = allEvents.map((event) => {
+      // Check if the event date is today
+      const isEventDateToday =
+        currentDate.toISOString().split('T')[0] === event.scheduleDate.toISOString().split('T')[0];
+
+      // Check if the event time has already expired
+      const eventDateTime = new Date(event.scheduleDate);
+      eventDateTime.setHours(parseInt(event.scheduleTime.split(':')[0], 10));
+      eventDateTime.setMinutes(parseInt(event.scheduleTime.split(':')[1], 10));
+
+      const status = currentDate > eventDateTime;
+
+      // Return required details
+      return {
+        name: event.eventName,
+        data: isEventDateToday
+          ? event.scheduleTime
+          : status
+          ? eventDateTime.toISOString().split('T')[0]  // Return only the date for future events
+          : eventDateTime.toISOString().split('T')[0], // Return the scheduled date for past events
+        status,
+      };
+    });
+
+    res.status(200).json(eventsData);
+  } catch (error) {
+    console.error('Error fetching events:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 export {
     adminAuth,
     adminRegister,
     adminLogout,
     userData,
     toggleUserStatus,
-    eventAdded
+    eventAdded,
+    showEvents
 };

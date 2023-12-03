@@ -5,7 +5,8 @@ import {
   adminLogout,
   userData,
   toggleUserStatus,
-  eventAdded
+  eventAdded,
+  showEvents
 } from '../controllers/adminController.js';
 import { protect } from '../middleware/adminAuthMId.js';
 import multer from 'multer';
@@ -16,22 +17,7 @@ import multer from 'multer';
 const router = express.Router();
 
 
-// // Configure Multer storage
-// const storage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, 'uploads'); // Destination folder for uploaded images
-//   },
-//   filename: (req, file, cb) => {
-//     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-//     cb(null, uniqueSuffix + '-' + file.originalname);
-//   },
-// });
 
-// const upload = multer({ storage: storage });
-
-
-
-// Multer storage configuration
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, 'uploads'); // Destination folder for uploaded images
@@ -50,6 +36,6 @@ router.post('/logout', adminLogout);
 router.get('/userData',userData)
 router.post('/toggleUserStatus',toggleUserStatus)
 router.post('/eventAdded', upload.single('media'), eventAdded);
-
+router.get('/showEvents',showEvents)
 
 export default router;

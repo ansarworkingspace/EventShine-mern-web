@@ -64,6 +64,7 @@ const Table = () => {
                       border: 'none',
                       width: '5rem',
                       borderRadius: '0.4rem',
+                      color:"black"
                     }}
                   >
                     Unblock
@@ -76,6 +77,7 @@ const Table = () => {
                       border: 'none',
                       width: '5rem',
                       borderRadius: '0.4rem',
+                      color:"black"
                     }}
                   >
                     Block
