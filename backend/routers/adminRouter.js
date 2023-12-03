@@ -4,6 +4,7 @@ import {
   adminRegister,
   adminLogout,
   userData,
+  toggleUserStatus
 } from '../controllers/adminController.js';
 import { protect } from '../middleware/adminAuthMId.js';
 
@@ -14,5 +15,7 @@ router.post('/register', adminRegister);
 router.post('/auth', adminAuth);
 router.post('/logout', adminLogout);
 router.get('/userData',userData)
+router.post('/toggleUserStatus',toggleUserStatus)
+
 
 export default router;

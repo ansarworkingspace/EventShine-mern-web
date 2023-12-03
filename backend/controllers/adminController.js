@@ -73,10 +73,39 @@ const userData = asyncHandler(async(req,res)=>{
       }
 })
 
+const toggleUserStatus = asyncHandler(async(req,res)=>{
+    try {
+        const userId = req.body.userId; // Assuming userId is sent in the request body
+    
+        // Find the user by ID
+        const user = await User.findById(userId);
+    
+        if (!user) {
+          return res.status(404).json({ message: 'User not found' });
+        }
+    
+        // Toggle user status
+        if (!user.status) {
+          user.status = true;
+        } else {
+          user.status = false;
+        }
+    
+        await user.save();
+    
+        // Send a response indicating success
+        res.status(200).json({ message: 'User status toggled successfully' });
+      } catch (error) {
+        console.error('Error toggling user status:', error);
+        res.status(500).json({ message: 'Internal server error' });
+      }
+})
+
 
 export {
     adminAuth,
     adminRegister,
     adminLogout,
-    userData
+    userData,
+    toggleUserStatus
 };

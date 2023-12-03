@@ -5,11 +5,23 @@ import { adminBaseUrl } from '../../utils/adminBaseUrl';
 import axios from 'axios';
 
 const Table = () => {
+    
   const [userData, setUserData] = useState([]);
 
-  const toggleBlock = (userId) => {
-    // Your logic for toggling block status based on user ID
-    console.log(`Toggling block for user ID: ${userId}`);
+  const toggleBlock = async (userId) => {
+    try {
+      // Make a request to the backend to toggle user status
+      await axios.post(`${adminBaseUrl}/toggleUserStatus`, { userId });
+
+      // Update the local state based on the response
+      setUserData((prevUserData) =>
+        prevUserData.map((user) =>
+          user._id === userId ? { ...user, status: !user.status } : user
+        )
+      );
+    } catch (error) {
+      console.error('Error toggling user status:', error);
+    }
   };
 
   useEffect(() => {
@@ -44,17 +56,31 @@ const Table = () => {
               <td>{item.name}</td>
               <td>{item.email}</td>
               <td>
-                <button
-                  onClick={() => toggleBlock(item._id)}
-                  style={{
-                    backgroundColor: 'lightgreen',
-                    border: 'none',
-                    width: '5rem',
-                    borderRadius: '0.4rem',
-                  }}
-                >
-                  Block
-                </button>
+                {item.status ? (
+                  <button
+                    onClick={() => toggleBlock(item._id)}
+                    style={{
+                      backgroundColor: '#7aff94',
+                      border: 'none',
+                      width: '5rem',
+                      borderRadius: '0.4rem',
+                    }}
+                  >
+                    Unblock
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => toggleBlock(item._id)}
+                    style={{
+                      backgroundColor: '#ff7a7a',
+                      border: 'none',
+                      width: '5rem',
+                      borderRadius: '0.4rem',
+                    }}
+                  >
+                    Block
+                  </button>
+                )}
               </td>
             </tr>
           ))}
