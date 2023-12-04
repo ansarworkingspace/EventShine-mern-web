@@ -1,1 +1,1 @@
-export const  adminBaseUrl = 'http://localhost:5000/api/admin'
+export const  adminBaseUrl = 'https://muhammedansar.online/api/admin'

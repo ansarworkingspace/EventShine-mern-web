@@ -131,7 +131,7 @@ const OtpEmail = () => {
   const [verifyOTP] = useVerifyOTPMutation();
   const [resendOTP] = useResendOTPMutation();
   const [isTimerExpired, setIsTimerExpired] = useState(false);
-  const [remainingTime, setRemainingTime] = useState(30);
+  const [remainingTime, setRemainingTime] = useState(60);
 
   useEffect(() => {
     if (remainingTime > 0) {
@@ -153,7 +153,7 @@ const OtpEmail = () => {
   
       if (res.message === 'OTP resent successfully') {
         // Reset timer and enable submit button
-        setRemainingTime(30);
+        setRemainingTime(60);
         setIsTimerExpired(false);
       } else {
         console.error('Error while resending OTP:', res.message || 'Unknown error');
